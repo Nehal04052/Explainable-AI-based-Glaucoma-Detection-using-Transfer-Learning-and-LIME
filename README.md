@@ -1,6 +1,6 @@
 ---
 
-# Explainable AI-Based Glaucoma Detection using Transfer Learning, Express.js, and LIME
+# Explainable AI-Based Glaucoma Detection using Transfer Learning and LIME
 
 This project leverages **Explainable AI (XAI)** for detecting glaucoma using Transfer Learning with a pre-trained CNN model, combined with **LIME** (Local Interpretable Model-agnostic Explanations) for model interpretability. The system uses **Express.js** and **FastAPI** for backend operations, and **React.js** for a responsive frontend.
 
