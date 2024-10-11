@@ -1,0 +1,2 @@
+# Explainable-AI-based-Glaucoma-Detection-using-Transfer-Learning-and-LIME
+This project leverages Explainable AI for glaucoma detection using Transfer Learning and LIME. It features a React.js frontend for user interaction, Node.js with Express.js for backend APIs, FastAPI for model serving, and MongoDB for data storage. The system provides accurate predictions and interpretable results for better understanding.
