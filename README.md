@@ -13,6 +13,7 @@ This project leverages **Explainable AI (XAI)** for detecting glaucoma using Tra
 - [Usage](#usage)
 - [Results and Visualizations](#results-and-visualizations)
 - [Contributing](#contributing)
+- [Snapshots](#snapshots)
 ---
 
 ## Project Overview
@@ -175,4 +176,50 @@ We welcome contributions! Follow these steps to contribute:
 4. Push to the branch (`git push origin feature/YourFeature`).
 5. Open a Pull Request.
 
+---
+
+---
+
+## Snapshots
+
+Here are some snapshots of the system in action:
+
+### Home Page
+![Home Page](Snapshots/Home_Page.png)
+
+### About Page
+![About Page](Snapshots/About_Page.png)
+
+### Contact Us Page
+![Contact Us Page](Snapshots/Contact_Us_Page.png)
+
+### Image Upload Interface
+![Image Upload](Snapshots/Image_Upload.png)
+
+### Model Prediction and LIME Processing
+![Model Prediction and LIME Processing](Snapshots/Model_Prediction_and_Lime_Processing.png)
+
+### Prediction Result
+![Prediction](Snapshots/Prediction.png)
+
+### LIME Explanation 1
+![LIME Explanation 1](Snapshots/Lime_Explanation-1.png)
+
+### LIME Explanation 2
+![LIME Explanation 2](Snapshots/Lime_Explanation-2.png)
+
+### LIME Explanation 3
+![LIME Explanation 3](Snapshots/Lime_Explanation-3.png)
+
+### LIME Explanation 4
+![LIME Explanation 4](Snapshots/Lime_Explanation-4.png)
+
+### LIME Explanation 5
+![LIME Explanation 5](Snapshots/Lime_Explanation-5.png)
+
+### Feedback Submission Page
+![Feedback Submission](Snapshots/FeedBack Submission.png)
+
+### MongoDB Database Store
+![MongoDB Database Store](Snapshots/MogodbDatabase_Store.png)
 ---
