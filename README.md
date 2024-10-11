@@ -218,7 +218,7 @@ Here are some snapshots of the system in action:
 ![LIME Explanation 5](Snapshots/Lime_Explanation-5.png)
 
 ### Feedback Submission Page
-![Feedback Submission](Snapshots/FeedBack Submission.png)
+![Feedback Submission](Snapshots/FeedBack_Submission.png)
 
 ### MongoDB Database Store
 ![MongoDB Database Store](Snapshots/MogodbDatabase_Store.png)
