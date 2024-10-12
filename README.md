@@ -84,7 +84,7 @@ This project uses the following technologies:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Explainable-AI-based-Glaucoma-Detection.git
+git clone https://github.com/Nehal04052/Explainable-AI-based-Glaucoma-Detection-using-Transfer-Learning-and-LIME.git
 cd Explainable-AI-based-Glaucoma-Detection
 ```
 
