@@ -21,7 +21,7 @@ This project leverages **Explainable AI (XAI)** for detecting glaucoma using Tra
 This project detects glaucoma from fundus images using Transfer Learning with a pre-trained convolutional neural network (CNN). Additionally, **LIME** provides visual explanations for the model’s predictions. The system consists of:
 - **Frontend (React.js):** User interaction and image upload.
 - **Backend (Express.js and FastAPI):** Handles API requests and serves the model.
-- **Database (MongoDB):** Stores user data and model predictions.
+- **Database (MongoDB):** Stores user feedback data.
 - **Test Images:** A collection of glaucoma and normal images for testing the system’s accuracy.
 
 ---
@@ -75,7 +75,7 @@ This project uses the following technologies:
   - LIME for generating interpretable visual explanations.
 
 - **Database:**
-  - MongoDB for storing user data and model predictions.
+  - MongoDB for storing user feedback data.
 
 ---
 
