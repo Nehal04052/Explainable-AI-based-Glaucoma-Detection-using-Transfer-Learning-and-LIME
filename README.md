@@ -35,6 +35,7 @@ Project/
 │
 ├── Backend_Model/                    # Backend for the machine learning model and API
 │   ├── model/                        # Model-related files
+│   ├── Notebooks/                    # Model Training Notebooks
 │   ├── predictenv/                   # Environment setup for model predictions
 │   ├── server/                       # Fast API backend for model deployment
 │   
