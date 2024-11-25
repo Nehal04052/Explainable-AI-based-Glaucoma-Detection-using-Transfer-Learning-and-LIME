@@ -2,7 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 
 /* eslint-disable react/prop-types */
-export default function FormComponent({ setResult, setImages, setIsLoading }) {
+export default function FormComponent({ setResult, setImages, setExplain, setIsLoading }) {
   const [formData, setFormData] = useState({
     ImgFile: null,
   });
@@ -26,6 +26,7 @@ export default function FormComponent({ setResult, setImages, setIsLoading }) {
       const predictions = await handleRequest(formDataToSend);
       setResult(predictions.predictions); // Update to set the predictions
       setImages(predictions.images); // Update to set images returned from FastAPI
+      setExplain(predictions.groq_explanation); // Update to set explain returned from FastAPI
     } catch (error) {
       console.error("Error occurred while sending POST request:", error);
     } finally {

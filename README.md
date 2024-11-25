@@ -1,28 +1,73 @@
+
 ---
 
-# Explainable AI-Based Glaucoma Detection using Transfer Learning and LIME
+# Explainable AI-Based Glaucoma Detection using Transfer Learning, LIME and LLMs.
 
-This project leverages **Explainable AI (XAI)** for detecting glaucoma using Transfer Learning with a pre-trained CNN model, combined with **LIME** (Local Interpretable Model-agnostic Explanations) for model interpretability. The system uses **Express.js** and **FastAPI** for backend operations, and **React.js** for a responsive frontend.
+This project presents a **Multi-Modal Framework** for glaucoma classification, combining Transfer Learning, Explainable AI (XAI), and advanced large language models (LLMs). By integrating **LLAMA 3.2 90B Vision Model** for visual analysis and **LLAMA 3.1 70B LLM** for reasoning and textual explanation, this system enhances both prediction accuracy and interpretability.
+
+---
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
-- [Project Structure](#project-structure)
+- [Overview](#overview)
+- [Framework Architecture](#framework-architecture)
 - [Technologies](#technologies)
+- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Results and Visualizations](#results-and-visualizations)
 - [Contributing](#contributing)
 - [Snapshots](#snapshots)
+
 ---
 
-## Project Overview
+## Overview
 
-This project detects glaucoma from fundus images using Transfer Learning with a pre-trained convolutional neural network (CNN). Additionally, **LIME** provides visual explanations for the model’s predictions. The system consists of:
-- **Frontend (React.js):** User interaction and image upload.
-- **Backend (Express.js and FastAPI):** Handles API requests and serves the model.
-- **Database (MongoDB):** Stores user feedback data.
-- **Test Images:** A collection of glaucoma and normal images for testing the system’s accuracy.
+The system detects glaucoma from fundus images using Transfer Learning and integrates **LIME** to provide visual explanations for predictions. To further enhance interpretability, it employs:  
+1. **LLAMA 3.2 90B Vision Model:** Analyzes LIME-based visual explanations to refine interpretability.  
+2. **LLAMA 3.1 70B LLM:** Generates detailed textual reasoning, combining model outputs and vision insights.  
+
+**System Components:**  
+- **Frontend:** React.js-based interface for image upload and result visualization.  
+- **Backend:** Express.js and FastAPI for handling predictions and hosting LLMs.  
+- **Image Analysis:** Combines CNN-based classification with LIME and LLAMA models for interpretability.  
+- **Database:** MongoDB stores user feedback to refine predictions.
+
+---
+
+## Framework Architecture
+
+The workflow includes the following steps:  
+
+1. **Image Upload:** Users upload fundus images for evaluation.  
+2. **Classification:** A pre-trained CNN model classifies the images as **Normal** or **Glaucoma**.  
+3. **LIME Explanation:** Highlights critical regions influencing the model’s decision.  
+4. **Vision Model Analysis:**  
+   - The **LLAMA 3.2 90B Vision Model** refines the explanation by analyzing LIME heatmaps and extracting superpixel importance.  
+5. **Reasoning and Explanation:**  
+   - The **LLAMA 3.1 70B LLM** generates a detailed textual explanation, synthesizing classification results and vision insights.  
+6. **Feedback:** Users can submit feedback for continuous improvement.  
+
+---
+
+## Technologies
+
+### Core Technologies:
+- **Frontend:**  
+  - **React.js** for an interactive user interface.  
+
+- **Backend:**  
+  - **Express.js** for RESTful APIs.  
+  - **FastAPI** for serving machine learning models.  
+
+- **AI Models:**  
+  - **Transfer Learning:** Pre-trained CNN (e.g., VGG16) for glaucoma classification.  
+  - **LIME:** For visualizing feature importance.  
+  - **LLAMA 3.2 90B Vision Model:** Processes LIME-based visual explanations to refine interpretability.  
+  - **LLAMA 3.1 70B LLM:** Produces natural language explanations based on model predictions and visual insights.  
+
+- **Database:**  
+  - **MongoDB** stores user feedback and metadata for continuous system improvement.
 
 ---
 
@@ -57,29 +102,7 @@ Project/
 ├── .gitignore                        # Files to be ignored by git
 └── README.md                         # Project documentation
 ```
-
 ---
-
-## Technologies
-
-This project uses the following technologies:
-
-- **Frontend:**
-  - React.js for building the user interface.
-  
-- **Backend:**
-  - **Express.js** (Node.js framework) for creating RESTful APIs.
-  - **FastAPI** (Python) for serving the machine learning model and handling predictions.
-
-- **Model and Machine Learning:**
-  - Transfer Learning using pre-trained CNN models like VGG16.
-  - LIME for generating interpretable visual explanations.
-
-- **Database:**
-  - MongoDB for storing user feedback data.
-
----
-
 ## Installation
 
 ### Step 1: Clone the Repository
@@ -156,16 +179,21 @@ Once running, you can access the application in your browser at `http://localhos
 
 ## Results and Visualizations
 
-- **Prediction:** The model classifies uploaded fundus images as either **Glaucoma** or **Normal**.
-- **LIME Explanation:** Visualizes the important regions of the image that influenced the decision, providing insights for clinicians.
+### Outputs:
+1. **Classification Result:** Identifies the input image as **Normal** or **Glaucoma**.  
+2. **LIME Heatmaps:** Highlights important regions in the fundus image.  
+3. **LLAMA-Enhanced Explanation:**  
+   - **Visual Analysis (LLAMA 3.2 90B):** Refines LIME outputs by identifying key superpixels and their relevance.  
+   - **Reasoning (LLAMA 3.1 70B):** Provides detailed natural language explanations, offering clinical insights.  
 
-**Example Workflow:**
-
-1. Upload an image (from the `Test Images` folder).
-2. The system classifies the image and provides an explanation via LIME.
-3. View the prediction and the highlighted regions that influenced the model’s decision.
+### Example Workflow:
+1. Upload a test image (e.g., from the `Test Images` folder).  
+2. Receive the classification result and LIME-based visual heatmap.  
+3. View detailed reasoning generated by the LLAMA models.  
+4. Optionally submit feedback to improve the system.  
 
 ---
+
 
 ## Contributing
 
@@ -179,11 +207,12 @@ We welcome contributions! Follow these steps to contribute:
 
 ---
 
----
-
 ## Snapshots
 
 Here are some snapshots of the system in action:
+
+### Multi-Modal Framework for Glaucoma Classification and Explainable AI Integration
+![Multi-Modal Framework for Glaucoma Classification and Explainable AI Integration](Snapshots/Multi-Modal%20Framework%20for%20Glaucoma%20Classification%20and%20Explainable%20AI%20Integration.svg)
 
 ### Home Page
 ![Home Page](Snapshots/Home_Page.png)
@@ -215,8 +244,8 @@ Here are some snapshots of the system in action:
 ### LIME Explanation 4
 ![LIME Explanation 4](Snapshots/Lime_Explanation-4.png)
 
-### LIME Explanation 5
-![LIME Explanation 5](Snapshots/Lime_Explanation-5.png)
+### AI Generated Explaination
+![AI Generated Explaination](Snapshots/AI_Generated_Explanation.png)
 
 ### Feedback Submission Page
 ![Feedback Submission](Snapshots/FeedBack_Submission.png)

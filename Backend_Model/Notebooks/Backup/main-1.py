@@ -1,8 +1,5 @@
 # Import necessary libraries
 import os
-from dotenv import load_dotenv
-# Load environment variables from the .env file
-load_dotenv()
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -78,11 +75,31 @@ def extract_lime_explanation(explanation):
     return lime_data
 
 
-def explain_with_LLM(lime_explanation_base64,prediction, superpixels):
+def explain_with_llm(temp,mask,prediction, superpixels):
 
+    # Function to convert the LIME explanation to Base64
+    def convert_plot_to_base64(img, mask, title="LIME Explanation"):
+        # Create a plot
+        fig, ax = plt.subplots(figsize=(5, 5))
+        ax.imshow(mark_boundaries(img / 255.0, mask))
+        ax.set_title(title)
+        ax.axis('off')
+        plt.tight_layout()
+
+        # Save the plot to a BytesIO object
+        buf = io.BytesIO()
+        plt.savefig(buf, format="jpeg")
+        plt.close(fig)  # Close the figure to free resources
+        buf.seek(0)
+        # Convert BytesIO content to Base64
+        return base64.b64encode(buf.read()).decode('utf-8')
+
+    # Convert the explanation to Base64
+    lime_base64 = convert_plot_to_base64(temp, mask, title="LIME Explanation - Positive and Negative Contributions")
+    
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-    # LLaMA 3.2 90b Vision Model Prompt: LIME explanation and image input
+    # Vision Model Prompt: LIME explanation and image input
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -109,7 +126,7 @@ def explain_with_LLM(lime_explanation_base64,prediction, superpixels):
                     },
                     {
                         "type": "image_url",
-                        "image_url": {"url": f"data:image/png;base64,{lime_explanation_base64}"},
+                        "image_url": {"url": f"data:image/png;base64,{lime_base64}"},
                     },
                 ],
             }
@@ -125,7 +142,7 @@ def explain_with_LLM(lime_explanation_base64,prediction, superpixels):
     model_name="llama-3.1-70b-versatile"
     )
 
-    # LLaMA 3.1 70B Explanation Prompt: Summarizing the vision model's output
+    # LLaMA 70B Explanation Prompt: Summarizing the vision model's output
     explanation_prompt = """
     You are provided with a LIME explanation of an image classification model, which predicts glaucoma. The explanation includes superpixels indicating areas of the image that have a positive or negative influence on the prediction.
     ### Key Details from the LIME Explanation:
@@ -200,8 +217,6 @@ async def predict(file: UploadFile = File(...)):
     superpixels_image_base64 = plot_to_base64(plt.gcf())
     plt.close()
 
-    '''GENERATE EXPLANATION THROUGH LIME (Local Interpretable Model-Agnostic Explanations)'''
-
     # LIME Explanation
     plt.figure(figsize=(5, 5))
     plt.imshow(mark_boundaries(temp / 255.0, mask))
@@ -223,6 +238,15 @@ async def predict(file: UploadFile = File(...)):
     feature_importance = explanation.local_exp[label]
     features, weights = zip(*feature_importance)
     sorted_indices = np.argsort(weights)[::-1]
+    plt.figure(figsize=(15, 5))
+    plt.bar(range(len(weights)), np.array(weights)[sorted_indices], color='blue')
+    plt.xticks(range(len(weights)), np.array(features)[sorted_indices], rotation=90) # type: ignore
+    plt.title("Feature Importance of Superpixels")
+    plt.xlabel("Superpixels")
+    plt.ylabel("Weight")
+    plt.grid(axis='y')
+    feature_importance_base64 = plot_to_base64(plt.gcf())
+    plt.close()
 
     # Highlighting Top Contributing Superpixels
     top_n = 5  # Number of top superpixels to highlight
@@ -262,6 +286,7 @@ async def predict(file: UploadFile = File(...)):
         plt.close()
 
 
+
     # Overlaying LIME Mask on Original Image
     plt.figure(figsize=(5, 5))
     plt.imshow(original_image)
@@ -271,14 +296,16 @@ async def predict(file: UploadFile = File(...)):
     mask_overlay_base64 = plot_to_base64(plt.gcf())
     plt.close()
 
-    '''GENERATE EXPLANATION THROUGH LLM (LLaMA 3.1 70B)'''
 
+    
     # Extract LIME explanation details
     lime_explanation_data = extract_lime_explanation(explanation)
 
+
     # Generate explanation using ChatGroq (LLaMA 70B)
-    groq_explanation = explain_with_LLM(
-        lime_explanation_base64,
+    groq_explanation = explain_with_llm(
+        temp,
+        mask,
         predictions[0][0],
         superpixels=lime_explanation_data[0]['superpixels']
     )
@@ -311,6 +338,8 @@ async def predict(file: UploadFile = File(...)):
     superpixel_importance_base64 = plot_to_base64(fig)
     plt.close()
 
+    print(predictions[0][0])
+
     return {
         "predictions": predictions.tolist(),
         "groq_explanation": groq_explanation_parsed,
@@ -319,6 +348,7 @@ async def predict(file: UploadFile = File(...)):
             "superpixels_image": f"data:image/png;base64,{superpixels_image_base64}",
             "lime_explanation": f"data:image/png;base64,{lime_explanation_base64}",
             "lime_positive": f"data:image/png;base64,{lime_positive_base64}",
+            "feature_importance": f"data:image/png;base64,{feature_importance_base64}",
             "top_contributing": f"data:image/png;base64,{top_contributing_base64}",
             "perturbed_images": [f"data:image/png;base64,{img_base64}" for img_base64 in perturbed_images_base64],
             "mask_overlay": f"data:image/png;base64,{mask_overlay_base64}",

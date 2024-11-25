@@ -22,7 +22,7 @@
 
 /* Expanded State */
 .beta.expanded {
-  height: 675vh; /* Increased height when analyzed images are displayed */
+  height: 780vh; /* Increased height when analyzed images are displayed */
 }
 
 
@@ -85,8 +85,11 @@
 .AnalyzedImage{
   height: 90%;
   width : 80%;
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
+  border-radius: 1rem;
 }
+
+
 .AnalyzedImage:hover {
   transform: scale(1.05); /* Slight zoom effect on hover */
 }
@@ -99,6 +102,77 @@
 }
 .AnalyzedImage_Feature_Importance:hover {
   transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+#gen{
+  height: 400px;
+  width: 420px;
+}
+#magic{
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
+}
+
+.image-with-heading {
+  display: flex;
+  align-items: center; /* Vertically aligns the items */
+}
+
+#GROQ Explanation {
+  font-size: 24px; /* Adjust the font size of the heading */
+}
+
+.groq-container {
+  background: linear-gradient(145deg, #2d2727, #433535);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #eaedf1;
+}
+/* Header Section */
+.image-with-heading {
+  display: flex;
+  align-items: center; /* Align vertically */
+  gap: 1rem; /* Space between logo and heading */
+}
+
+#magic {
+  height: 70px;
+  width: 70px;
+}
+
+#GROQ-Explanation {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #eaedf1;
+}
+
+.GroqExplanation{
+  font: italic 15px monospace;
+  font-weight: normal;
+}
+
+/* Visualization Section */
+.visualization-section {
+  text-align: center;
+}
+
+#Superpixel-Importance {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #eaedf1;
+  margin-bottom: 12px;
+}
+
+#Superpixel-Importance-description{
+  margin-top: 14px;
+  font-size: 1.2rem;
+  font: italic bold 17px monospace;
 }
 
 @keyframes spinner {

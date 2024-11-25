@@ -11,7 +11,7 @@ import loading from "../../assets/img/loading.png";
 // eslint-disable-next-line react/prop-types
 function RenderResult({ result, images, isLoading }) {
   if (!result || isNaN(result)) {
-    if (isLoading) return <img id="loadingimg" className="loader" src={loading} alt="loading"/>;
+    if (isLoading) return <img id="loadingimg" className="loader" src={loading} alt="loading" />;
     return (
       <img id="detectionimg" src={detection} alt="detection image" style={{ width: "100%" }} />
     );
@@ -52,7 +52,60 @@ function RenderResult({ result, images, isLoading }) {
   );
 }
 
-function AnalyzedImages({ images }) {
+function AnalyzedImages({ images, llmExplaination }) {
+  const formatKey = (key) => {
+    return key
+      .replace(/_/g, " ") // Replace underscores with spaces
+      .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize the first letter of each word
+  };
+  // Render JSON dynamically
+  const renderJsonData = (data) => {
+    return Object.keys(data).map((key) => {
+      const value = data[key];
+      const formattedKey = formatKey(key);
+      if (Array.isArray(value)) {
+        // Handle arrays
+        if (value.length > 0 && typeof value[0] === "object") {
+          // If array contains objects, render them
+          return (
+            <div key={key} className="json-section">
+              {/* <h1>{formattedKey}</h1> */}
+            </div>
+          );
+        } else {
+          // If array contains primitives, render them
+          return (
+            <div key={key} className="json-section">
+              <h1>{formattedKey}</h1>
+              <ul>
+                {value.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+      } else if (typeof value === "object") {
+        // Handle nested objects
+        return (
+          <div key={key} className="json-section">
+
+            {renderJsonData(value)}
+          </div>
+        );
+      } else {
+        // Handle primitive values
+        return (
+          <div key={key} className="json-section">
+            {/* { <h1>{formattedKey}</h1> } */}
+            <strong>→ {value}</strong>
+            {"\n"}
+          </div>
+        );
+      }
+    });
+  };
+
   return (
     images && (
       <div>
@@ -128,14 +181,63 @@ function AnalyzedImages({ images }) {
           </Col>
         </Row>
 
+
+
+        {/* Render GROQ Explanation */}
+        {/* <Row>
+          <Col>
+            <div class="image-with-heading">
+              <img id="magic" src="src/assets/img/Google_Bard_logo.svg.png" alt="Description of image"></img>
+              <h1 id="GROQ Explanation">AI GENERATED</h1>
+            </div>
+          </Col>
+        </Row> */}
+
+        {/* Superpixel Importance Visualization */}
+        {/* <Row>
+          <Col>
+          <h1></h1>
+            <h1 id="Superpixel Importance">Superpixel Importance Visualization</h1>
+            <h4>Annotated image showing importance scores of superpixels, highlighting contributions.</h4>
+            <img className="AnalyzedImage" id="gen" src={images.superpixel_importance} alt="Superpixel Importance" />
+          </Col>
+        </Row> */}
+
+        {/* <Row>
+          <Col>
+          <h1></h1>
+            <h3> Explanation :-</h3>
+            <div className="GroqExplanation">{renderJsonData(llmExplaination)}</div>
+          </Col>
+        </Row> */}
+
         <Row>
           <Col>
-            <h4 id="Feature Importance">Feature Importance</h4>
-            <p>Bar chart showing the feature importance of superpixels indicating their influence on the prediction.
-            </p>
-            <img className="AnalyzedImage_Feature_Importance" src={images.feature_importance} alt="Feature Importance" />
+            <div className="groq-container">
+              {/* Header with Logo */}
+              <div className="image-with-heading">
+                <img id="magic" src="src/assets/img/Google_Bard_logo.svg.png" alt="Description of image" />
+                <h1 id="GROQ-Explanation">AI GENERATED</h1>
+              </div>
+
+              {/* Superpixel Importance Visualization */}
+              <div className="visualization-section">
+                <h1 id="Superpixel-Importance">Superpixel Importance Visualization</h1>
+                <img className="AnalyzedImage" id="gen" src={images.superpixel_importance} alt="Superpixel Importance" />
+                <h4 id= "Superpixel-Importance-description" >Annotated image showing importance scores of superpixels, highlighting contributions.</h4>
+              </div>
+
+              {/* Explanation */}
+              <div className="explanation-section">
+                <h3>Explanation:</h3>
+                <div className="GroqExplanation">{renderJsonData(llmExplaination)}</div>
+              </div>
+            </div>
           </Col>
         </Row>
+
+
+
       </div>
     )
   );
@@ -144,6 +246,7 @@ function AnalyzedImages({ images }) {
 export default function Predict() {
   const [result, setResult] = useState();
   const [images, setImages] = useState(); // State to hold images from predictions
+  const [llmExplaination, setExplain] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const hasAnalyzedImages = images && Object.keys(images).length > 0; // Check if images are present
 
@@ -166,7 +269,7 @@ export default function Predict() {
               To analyze the condition of the eye, the ML model mainly requires
               your retinal scan.
             </p>
-            <FormComponent {...{ setResult, setImages, setIsLoading }} />
+            <FormComponent {...{ setResult, setImages, setExplain, setIsLoading }} />
           </Col>
           <Col id='display-results'>
             <RenderResult result={result} images={images} isLoading={isLoading} />
@@ -176,7 +279,8 @@ export default function Predict() {
         {/* New Row for Analyzed Images */}
         <Row>
           <Col>
-            <AnalyzedImages images={images} />
+            <AnalyzedImages images={images} llmExplaination={llmExplaination} />
+
           </Col>
         </Row>
       </Container>

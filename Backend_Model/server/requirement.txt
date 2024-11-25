@@ -4,3 +4,6 @@ lime
 matplotlib
 pillow
 scikit-image
+langchain_groq
+langchain_core
+groq

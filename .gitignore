@@ -6,8 +6,12 @@
 Backend_Model/predictenv/
 
 #Ignore Model
-
 Backend_Model/model/MP_VGG16-FineTunning-Modified-V3.h5
+
+#Ingore .envs
+Backend_Model/server/.env
+Glaucoma-Detection-using-Transfer-Learning/.env
+
 
 # Python cache (global rule to catch all __pycache__ folders)
 **/__pycache__/
