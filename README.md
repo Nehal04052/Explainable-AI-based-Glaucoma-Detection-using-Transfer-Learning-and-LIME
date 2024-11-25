@@ -233,16 +233,16 @@ Here are some snapshots of the system in action:
 ![Prediction](Snapshots/Prediction.png)
 
 ### LIME Explanation 1
-![LIME Explanation 1](Snapshots/Lime_Explanation-1.png)
+![LIME Explanation 1](Snapshots/Lime-Explanation-1.png)
 
 ### LIME Explanation 2
-![LIME Explanation 2](Snapshots/Lime_Explanation-2.png)
+![LIME Explanation 2](Snapshots/Lime-Explanation-2.png)
 
 ### LIME Explanation 3
-![LIME Explanation 3](Snapshots/Lime_Explanation-3.png)
+![LIME Explanation 3](Snapshots/Lime-Explanation-3.png)
 
 ### LIME Explanation 4
-![LIME Explanation 4](Snapshots/Lime_Explanation-4.png)
+![LIME Explanation 4](Snapshots/Lime-Explanation-4.png)
 
 ### AI Generated Explaination
 ![AI Generated Explaination](Snapshots/AI_Generated_Explanation.png)
